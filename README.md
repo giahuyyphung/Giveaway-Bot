@@ -12,4 +12,4 @@ Copyright 2020 © All RIghts are Reserved | If you are using any part of code pl
 **ngnix 2020 all rights reserved**
 
 # Host On Repl.it
-[![Use on Repl.it](https://replit.com/@KingBenz/Giveaway-Bot-1)](https://replit.com/@KingBenz/Giveaway-Bot-1)
+[![Use on Repl.it](https://replit.com/@KingBenz/Giveaway-Bot-2)]
