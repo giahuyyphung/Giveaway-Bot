@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
     await message.delete();
 
     // Bắt đầu giveaway
-    client.giveawaysManager.start(giveawayChannel, {
+    const giveaway = await client.giveawaysManager.start(giveawayChannel, {
         // Thời gian giveaway
         time: ms(giveawayDuration),
         // Phần thưởng giveaway
@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
             giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **__GIVEAWAY ENDED__** 🎉\nHosted by: <@" + message.author.id + ">",
             timeRemaining: "Time remaining: **{duration}**!",
             inviteToParticipate: "React with 🎉 to participate!",
-            winMessage: "Congratulations, {winners}! You won **{prize}**! Hosted by: <@" + message.author.id + ">",
+            winMessage: "Congratulations, {winners}! You won **{prize}**! Hosted by: <@" + message.author.id + ">! [Giveaway link](https://discord.com/channels/" + message.guild.id + "/" + giveawayChannel.id + "/" + giveaway.messageId + ")",
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
             hostedBy: "Hosted by: {user}",
