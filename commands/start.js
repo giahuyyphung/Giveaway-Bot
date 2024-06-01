@@ -50,8 +50,8 @@ exports.run = async (client, message, args) => {
         hostedBy: client.config.hostedBy ? message.author : null,
         // Tin nhắn
         messages: {
-            giveaway: (client.config.everyoneMention ? "<@&1080877156588060712>\n\n" : "")+"🎉 **GIVEAWAY** 🎉\nHosted by: <@" + message.author.id + ">",
-            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **GIVEAWAY ENDED** 🎉\nHosted by: <@" + message.author.id + ">",
+            giveaway: (client.config.everyoneMention ? "<@&1080877156588060712>\n\n" : "")+"🎉 **__GIVEAWAY__** 🎉\nHosted by: <@" + message.author.id + ">",
+            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **__GIVEAWAY ENDED__** 🎉\nHosted by: <@" + message.author.id + ">",
             timeRemaining: "Time remaining: **{duration}**!",
             inviteToParticipate: "React with 🎉 to participate!",
             winMessage: "Congratulations, {winners}! You won **{prize}**! Hosted by: <@" + message.author.id + ">",
