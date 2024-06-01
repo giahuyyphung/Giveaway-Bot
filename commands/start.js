@@ -4,35 +4,35 @@ exports.run = async (client, message, args) => {
 
     // If the member doesn't have enough permissions
     if(!message.member.hasPermission('MANAGE_MESSAGES') && !message.member.roles.cache.some((r) => r.name === "Giveaways")){
-        return message.channel.send('<:zen_wrong:952131605080727552> You need to have the manage messages permissions to start giveaways.');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You need to have the manage messages permissions to start giveaways.');
     }
 
     // Giveaway channel
     let giveawayChannel = message.mentions.channels.first();
-    // If no channel is mentionned
+    // If no channel is mentioned
     if(!giveawayChannel){
-        return message.channel.send('<:zen_wrong:952131605080727552> You have to mention a valid channel!');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You have to mention a valid channel!');
     }
 
     // Giveaway duration
     let giveawayDuration = args[1];
     // If the duration isn't valid
     if(!giveawayDuration || isNaN(ms(giveawayDuration))){
-        return message.channel.send('<:zen_wrong:952131605080727552> You have to specify a valid duration!');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid duration!');
     }
 
     // Number of winners
     let giveawayNumberWinners = args[2];
     // If the specified number of winners is not a number
     if(isNaN(giveawayNumberWinners) || (parseInt(giveawayNumberWinners) <= 0)){
-        return message.channel.send('<:zen_wrong:952131605080727552> You have to specify a valid number of winners!');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid number of winners!');
     }
 
     // Giveaway prize
     let giveawayPrize = args.slice(3).join(' ');
     // If no prize is specified
     if(!giveawayPrize){
-        return message.channel.send('<:zen_wrong:952131605080727552> You have to specify a valid prize!');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid prize!');
     }
 
     // Start the giveaway
@@ -47,14 +47,14 @@ exports.run = async (client, message, args) => {
         hostedBy: client.config.hostedBy ? message.author : null,
         // Messages
         messages: {
-            giveaway: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **GIVEAWAY** 🎉",
-            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **GIVEAWAY ENDED** 🎉",
+            giveaway: (client.config.everyoneMention ? "<@&1080877156588060712>\n\n" : "") + "🎉 **GIVEAWAY** 🎉",
+            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "") + "🎉 **GIVEAWAY ENDED** 🎉",
             timeRemaining: "Time remaining: **{duration}**!",
             inviteToParticipate: "React with 🎉 to participate!",
-            winMessage: "Congratulations, {winners}! You won **{prize}**!",
+            winMessage: `Congratulations, {winners}! You won **{prize}**! Hosted by ${message.author}`,
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
-            hostedBy: "Hosted by: {user}",
+            hostedBy: `Hosted by: ${message.author}`,
             winners: "winner(s)",
             endedAt: "Ended at",
             units: {
@@ -67,6 +67,23 @@ exports.run = async (client, message, args) => {
         }
     });
 
-    message.channel.send(`Giveaway started in ${giveawayChannel}!`);
+    // Automatically delete the host's ?start message
+    await message.delete();
+
+    // Send confirmation message with host's avatar
+    let embed = {
+        title: "Giveaway Started!",
+        description: `Giveaway started in ${giveawayChannel}!`,
+        color: 0x00FF00,
+        thumbnail: {
+            url: message.author.displayAvatarURL()
+        },
+        footer: {
+            text: `Hosted by ${message.author.tag}`,
+            icon_url: message.author.displayAvatarURL()
+        }
+    };
+    
+    message.channel.send({ embed });
 
 };
