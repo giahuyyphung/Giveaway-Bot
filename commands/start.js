@@ -2,59 +2,62 @@ const ms = require('ms');
 
 exports.run = async (client, message, args) => {
 
-    // If the member doesn't have enough permissions
+    // Nếu thành viên không có đủ quyền hạn
     if(!message.member.hasPermission('MANAGE_MESSAGES') && !message.member.roles.cache.some((r) => r.name === "Giveaways")){
         return message.channel.send('<a:hg_cross:1213677888528982026> You need to have the manage messages permissions to start giveaways.');
     }
 
-    // Giveaway channel
+    // Kênh giveaway
     let giveawayChannel = message.mentions.channels.first();
-    // If no channel is mentioned
+    // Nếu không có kênh nào được đề cập
     if(!giveawayChannel){
         return message.channel.send('<a:hg_cross:1213677888528982026> You have to mention a valid channel!');
     }
 
-    // Giveaway duration
+    // Thời gian giveaway
     let giveawayDuration = args[1];
-    // If the duration isn't valid
+    // Nếu thời gian không hợp lệ
     if(!giveawayDuration || isNaN(ms(giveawayDuration))){
         return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid duration!');
     }
 
-    // Number of winners
+    // Số người chiến thắng
     let giveawayNumberWinners = args[2];
-    // If the specified number of winners is not a number
+    // Nếu số lượng người chiến thắng không phải là số
     if(isNaN(giveawayNumberWinners) || (parseInt(giveawayNumberWinners) <= 0)){
         return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid number of winners!');
     }
 
-    // Giveaway prize
+    // Phần thưởng giveaway
     let giveawayPrize = args.slice(3).join(' ');
-    // If no prize is specified
+    // Nếu không có phần thưởng nào được xác định
     if(!giveawayPrize){
         return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid prize!');
     }
 
-    // Start the giveaway
+    // Xóa tin nhắn ?start của host
+    await message.delete();
+
+    // Bắt đầu giveaway
     client.giveawaysManager.start(giveawayChannel, {
-        // The giveaway duration
+        // Thời gian giveaway
         time: ms(giveawayDuration),
-        // The giveaway prize
+        // Phần thưởng giveaway
         prize: giveawayPrize,
-        // The giveaway winner count
+        // Số lượng người chiến thắng giveaway
         winnerCount: parseInt(giveawayNumberWinners),
-        // Who hosts this giveaway
+        // Người host giveaway
         hostedBy: client.config.hostedBy ? message.author : null,
-        // Messages
+        // Tin nhắn
         messages: {
-            giveaway: (client.config.everyoneMention ? "<@&1080877156588060712>\n\n" : "") + "🎉 **GIVEAWAY** 🎉",
-            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "") + "🎉 **GIVEAWAY ENDED** 🎉",
+            giveaway: (client.config.everyoneMention ? "<@&1080877156588060712>\n\n" : "")+"🎉 **GIVEAWAY** 🎉\nHosted by: <@" + message.author.id + ">",
+            giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"🎉 **GIVEAWAY ENDED** 🎉\nHosted by: <@" + message.author.id + ">",
             timeRemaining: "Time remaining: **{duration}**!",
             inviteToParticipate: "React with 🎉 to participate!",
-            winMessage: `Congratulations, {winners}! You won **{prize}**! Hosted by ${message.author}`,
+            winMessage: "Congratulations, {winners}! You won **{prize}**! Hosted by: <@" + message.author.id + ">",
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
-            hostedBy: `Hosted by: ${message.author}`,
+            hostedBy: "Hosted by: {user}",
             winners: "winner(s)",
             endedAt: "Ended at",
             units: {
@@ -62,28 +65,13 @@ exports.run = async (client, message, args) => {
                 minutes: "minutes",
                 hours: "hours",
                 days: "days",
-                pluralS: false // Not needed, because units end with a S so it will automatically removed if the unit value is lower than 2
+                pluralS: false // Không cần thiết, vì các đơn vị kết thúc bằng S nên sẽ tự động loại bỏ nếu giá trị đơn vị nhỏ hơn 2
             }
-        }
+        },
+        // Thêm ảnh avatar của người host vào tin nhắn
+        thumbnail: message.author.displayAvatarURL({ format: 'png', dynamic: true })
     });
 
-    // Automatically delete the host's ?start message
-    await message.delete();
-
-    // Send confirmation message with host's avatar
-    let embed = {
-        title: "Giveaway Started!",
-        description: `Giveaway started in ${giveawayChannel}!`,
-        color: 0x00FF00,
-        thumbnail: {
-            url: message.author.displayAvatarURL()
-        },
-        footer: {
-            text: `Hosted by ${message.author.tag}`,
-            icon_url: message.author.displayAvatarURL()
-        }
-    };
-    
-    message.channel.send({ embed });
+    message.channel.send(`Giveaway started in ${giveawayChannel}!`);
 
 };
