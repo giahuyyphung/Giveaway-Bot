@@ -51,10 +51,10 @@ exports.run = async (client, message, args) => {
         // Tin nhắn
         messages: {
             giveaway: (client.config.everyoneMention ? "\n\n" : "") + "<a:hc_sparkle:1239157985809403936> **Giveaways Đã Bắt Đầu** <a:hc_sparkle:1239157985809403936>",
-            giveawayEnded: (client.config.everyoneMention ? "\n\n" : "") + "<a:hc_sparkle:1239157985809403936> **Giveaways Đã Kết Thúc** <a:hc_sparkle:1239157985809403936>\nHosted by: <@" + message.author.id + ">",
+            giveawayEnded: (client.config.everyoneMention ? "\n\n" : "") + "<a:hc_sparkle:1239157985809403936> **Giveaways Đã Kết Thúc** <a:hc_sparkle:1239157985809403936>",
             timeRemaining: "<a:hc_quay:1210414481503559701> Countdown: **{duration}**!",
             inviteToParticipate: "<a:hc_muiten:1239143693479579658> React with 🎉 to participate!",
-            winMessage: "<a:hg_party:1082275579979649054> | Congratulations, {winners} won the **__{prize}__** Giveaways!",
+            winMessage: `<a:hg_party:1082275579979649054> | Congratulations, {winners} won the **__{prize}__** Giveaways, hosted by ${message.author}`,
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
             hostedBy: "<a:hg_Tail:1145346936560422942> Hosted by: {user}",
