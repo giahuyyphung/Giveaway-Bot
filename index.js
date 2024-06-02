@@ -13,7 +13,7 @@ client.giveawaysManager = new GiveawaysManager(client, {
     default: {
         botsCanWin: false,
         embedColor: "#FF0000",
-        reaction: "🎉"
+        reaction: "<a:hg_giveaways:1212044076585848883>"
     }
 });
 //Coded by Zero
