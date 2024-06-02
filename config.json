@@ -1,6 +1,6 @@
 {
   "token": "ENV", 
-  "prefix": "g!",
+  "prefix": "~",
   "everyoneMention": true,
   "hostedBy": true
 }
