@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
             hostedBy: "<a:hg_Tail:1145346936560422942> Hosted by: {user}",
-            winners: "winner(s)",
+            winners: "winner(s) 🎉",
             endedAt: "Ended at",
             units: {
                 seconds: "seconds",
