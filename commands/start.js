@@ -54,7 +54,7 @@ exports.run = async (client, message, args) => {
             giveawayEnded: (client.config.everyoneMention ? "@everyone\n\n" : "")+"<a:hc_sparkle:1239157985809403936> **Giveaways Đã Kết Thúc** <a:hc_sparkle:1239157985809403936>\nHosted by: <@" + message.author.id + ">",
             timeRemaining: "Time remaining: **{duration}**!",
             inviteToParticipate: "React with <a:hg_giveaways:1212044076585848883> to participate!",
-            winMessage: "Congratulations, {winners}! You won **{prize}**! Hosted by: <@" + message.author.id + ">",
+            winMessage: "<a:hg_party:1082275579979649054> | Congratulations, {winners} won the **{prize}** Giveaways!",
             embedFooter: "Giveaways",
             noWinner: "Giveaway cancelled, no valid participations.",
             hostedBy: "Hosted by: {user}",
