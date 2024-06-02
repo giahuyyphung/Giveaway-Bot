@@ -4,12 +4,12 @@ exports.run = async (client, message, args) => {
 
     // If the member doesn't have enough permissions
     if(!message.member.hasPermission('MANAGE_MESSAGES') && !message.member.roles.cache.some((r) => r.name === "Giveaways")){
-        return message.channel.send(':x: You need to have the manage messages permissions to reroll giveaways.');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You need to have the manage messages permissions to reroll giveaways.');
     }
 
     // If no message ID or giveaway name is specified
     if(!args[0]){
-        return message.channel.send(':x: You have to specify a valid message ID!');
+        return message.channel.send('<a:hg_cross:1213677888528982026> You have to specify a valid message ID!');
     }
 
     // try to found the giveaway with prize then with ID
