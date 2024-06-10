@@ -1,18 +1,11 @@
 const Discord = require('discord.js');
-const http = require('http');
+const client = new Discord.Client();
 const fs = require('fs');
 const config = require('./config.json');
-require('dotenv').config();
+require('dotenv').config()
 client.config = config;
 
-const client = new Discord.Client({
-    intents: [
-        Discord.Intents.FLAGS.GUILDS,
-        Discord.Intents.FLAGS.GUILD_MESSAGES,
-    ],
-});
-
-// Initialize discord giveaways
+// Init discord giveaways
 const { GiveawaysManager } = require('discord-giveaways');
 client.giveawaysManager = new GiveawaysManager(client, {
     storage: "./database.json",
@@ -24,7 +17,7 @@ client.giveawaysManager = new GiveawaysManager(client, {
     }
 });
 
-// Load all events
+/* Load all events */
 fs.readdir("./events/", (_err, files) => {
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
@@ -37,7 +30,7 @@ fs.readdir("./events/", (_err, files) => {
 
 client.commands = new Discord.Collection();
 
-// Load all commands
+/* Load all commands */
 fs.readdir("./commands/", (_err, files) => {
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
@@ -48,17 +41,26 @@ fs.readdir("./commands/", (_err, files) => {
     });
 });
 
-// Login through the client
-client.login(process.env.TOKEN);
-
-// Create a simple HTTP server to avoid port scan timeout error
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Discord Bot is running\n");
-});
-
 // Choose a port to listen on (process.env.PORT for Heroku, or a default port)
 const PORT = process.env.PORT || 3000;
+
+// Login through the client
+client.login(process.env.TOKEN)
+    .then(() => {
+        console.log('Discord Bot logged in successfully!');
+        console.log(`Web server running on port ${PORT}`);
+    })
+    .catch((error) => {
+        console.error('Error logging in Discord Bot:', error);
+    });
+
+// Keep the bot alive by creating a simple HTTP server
+const http = require('http');
+const server = http.createServer((_req, res) => {
+    res.writeHead(200);
+    res.end('Bot is running!');
+});
+
 server.listen(PORT, () => {
     console.log(`HTTP server listening on port ${PORT}`);
 });
