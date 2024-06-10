@@ -1,11 +1,18 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const http = require('http');
 const fs = require('fs');
 const config = require('./config.json');
-require('dotenv').config()
+require('dotenv').config();
 client.config = config;
 
-// Init discord giveaways
+const client = new Discord.Client({
+    intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES,
+    ],
+});
+
+// Initialize discord giveaways
 const { GiveawaysManager } = require('discord-giveaways');
 client.giveawaysManager = new GiveawaysManager(client, {
     storage: "./database.json",
@@ -16,9 +23,8 @@ client.giveawaysManager = new GiveawaysManager(client, {
         reaction: "🎉"
     }
 });
-//Coded by Zero
 
-/* Load all events */
+// Load all events
 fs.readdir("./events/", (_err, files) => {
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
@@ -31,7 +37,7 @@ fs.readdir("./events/", (_err, files) => {
 
 client.commands = new Discord.Collection();
 
-/* Load all commands */
+// Load all commands
 fs.readdir("./commands/", (_err, files) => {
     files.forEach((file) => {
         if (!file.endsWith(".js")) return;
@@ -43,4 +49,16 @@ fs.readdir("./commands/", (_err, files) => {
 });
 
 // Login through the client
-client.login(process.env.token);
+client.login(process.env.TOKEN);
+
+// Create a simple HTTP server to avoid port scan timeout error
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Discord Bot is running\n");
+});
+
+// Choose a port to listen on (process.env.PORT for Heroku, or a default port)
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`HTTP server listening on port ${PORT}`);
+});
