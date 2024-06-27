@@ -11,9 +11,9 @@ module.exports.run = async (client, message, args) => {
       .setDescription("Below are Commands you can do with Bot, Right now there is only 6 commands available, more commands will be added soon.")
       .addField("🎁 Giveaway 🎁","~start [channel-name] [Time] [winners] [Prize]\n~reroll [prize name]\n~end [prize name]")
       .addField("Examples", "~start #giveaway 5m 1 Testing\n~end Testing\n~reroll Testing")
-      .addField("Utility", "ping, invite", true)
+      .addField("Utility", "ping, invite, rd", true)
       .addField("ℹ Information ℹ", "stats", true)
-      .addField("Check out", " Join [This Server](https://discord.gg/p8Ctsm4z6R) for further support")
+      .addField("Check out", " Join [This Server](https://discord.gg/p8Ctsm4z6R) for further support\n</help:1245730761739604049> to get more commands")
       .setTimestamp()
       .setFooter(`Requested By ${message.author.tag}`, client.user.displayAvatarURL());
     message.channel.send("**Sent the commands in Direct Messages! 💌, Check DMs**");
