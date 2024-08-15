@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
       .addField("Examples", "~start #giveaway 5m 1 Testing\n~end Testing\n~reroll Testing")
       .addField("Utility", "ping, invite, rd, afk", true)
       .addField("ℹ Information ℹ", "stats", true)
-      .addField("Check out", " Join [This Server](https://discord.gg/p8Ctsm4z6R) for further support\n</help:1245730761739604049> to get more commands")
+      .addField("Check out", " Join [This Server](https://discord.gg/cat-curious-1003698094187216898) for further support\n</help:1245730761739604049> to get more commands")
       .setTimestamp()
       .setFooter(`Requested By ${message.author.tag}`, client.user.displayAvatarURL());
     message.channel.send("**Sent the commands in Direct Messages! 💌, Check DMs**");
